@@ -11,7 +11,19 @@ mess = ""
 # TODO: Add your token and your comport
 # Please check the comport in the device manager
 THINGS_BOARD_ACCESS_TOKEN = "3RIQ53PUutt8exKvoljb"
-bbc_port = "COM4"
+def getPort():
+    ports = serial.tools.list_ports.comports()
+    N = len(ports)
+    commPort = "None"
+    for i in range(0, N):
+        port = ports[i]
+        strPort = str(port)
+        if "USB Serial Device" in strPort:
+            splitPort = strPort.split(" ")
+            commPort = (splitPort[0])
+    return commPort
+# bbc_port = "COM4"
+bbc_port = getPort()
 if len(bbc_port) > 0:
     ser = serial.Serial(port=bbc_port, baudrate=115200)
 
